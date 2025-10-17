@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TechNova</string>
+    <string name="welcome_title">Bienvenido a TechNova</string>
+    <string name="btn_start">Comenzar</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="btn_register">Registrarme</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_phone">Teléfono</string>
+    <string name="login_question">¿No tienes cuenta? Regístrate</string>
+    <string name="profile_title">Perfil de usuario</string>
+    <string name="edit_profile">Editar perfil</string>
 </resources>
