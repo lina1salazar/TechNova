@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="24dp">
+
+
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Mi perfil" android:textSize="22sp" android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/etName" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="Nombre completo"
+        android:layout_marginTop="16dp" android:text="Natalia" />
+
+    <EditText
+        android:id="@+id/etEmail" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="Correo electrónico"
+        android:inputType="textEmailAddress" android:text="prueba@prueba.com" />
+
+    <Button
+        android:id="@+id/btnUpdate" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Actualizar Datos"
+        android:layout_marginTop="24dp"/>
+    <Button
+        android:id="@+id/btnLogout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Cerrar sesión"
+        android:layout_marginTop="24dp"/>
+
+</LinearLayout>

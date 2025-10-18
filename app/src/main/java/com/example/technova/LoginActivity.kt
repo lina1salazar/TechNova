@@ -11,7 +11,7 @@ class LoginActivity : AppCompatActivity() {
 
         val email = findViewById<EditText>(R.id.etEmail)
         val pass = findViewById<EditText>(R.id.etPassword)
-        /*
+
         findViewById<Button>(R.id.btnLogin).setOnClickListener {
             if (email.text.isNullOrBlank() || pass.text.isNullOrBlank()) {
                 Toast.makeText(this, "Ingresa correo y contraseña", Toast.LENGTH_SHORT).show()
@@ -20,6 +20,6 @@ class LoginActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvRegister).setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
-        */
+
     }
 }
