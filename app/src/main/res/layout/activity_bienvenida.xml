@@ -5,9 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tn_blue_dark"
+    android:background="@color/tn_white"
     tools:context=".activities.BienvenidaActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo_bienvenida"
+        android:scaleType="fitEnd"
+        android:layout_alignParentBottom="true"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,17 +32,22 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:src="@drawable/logo_technova_claro" />
+                android:src="@drawable/logo_technova" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
                 android:gravity="center"
+                android:layout_marginTop="0dp"
                 android:text="@string/welcome_title"
-                android:textColor="@color/tn_white"
+                android:textColor="@color/tn_blue_dark"
                 android:textSize="35sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:shadowColor="@color/tn_white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">TechNova</string>
-    <string name="welcome_title">Bienvenido a TechNova</string>
+    <string name="welcome_title">Bienvenido</string>
     <string name="btn_start">Comenzar</string>
     <string name="btn_login">Ingresar</string>
     <string name="btn_register">Registrarme</string>
