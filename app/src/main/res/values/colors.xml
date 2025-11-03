@@ -1,8 +1,10 @@
 <resources>
     <color name="tn_blue_primary">#3E45DD</color>
+    <color name="tb_blue_2">#3F94F1</color>
+    <color name="tb_blue_3">#18215F</color>
     <color name="tn_blue_dark">#0A192F</color>
-    <color name="tn_cyan">#1FF5F4</color>
-    <color name="tn_gray">#E5E5E5</color>
+    <color name="tn_cyan">#00D8FF</color>
+    <color name="tn_gray">#808080</color>
     <color name="tn_white">#FFFFFF</color>
     <color name="tn_black">#0D0D0D</color>
 </resources>

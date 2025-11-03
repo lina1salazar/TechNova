@@ -8,7 +8,8 @@
     <string name="hint_email">Correo electrónico</string>
     <string name="hint_password">Contraseña</string>
     <string name="hint_phone">Teléfono</string>
-    <string name="login_question">¿No tienes cuenta? Regístrate</string>
+    <string name="login_question">¿No tienes cuenta?</string>
+    <string name="login_register">Regístrate</string>
     <string name="profile_title">Perfil de usuario</string>
     <string name="edit_profile">Editar perfil</string>
 </resources>
