@@ -1,4 +1,4 @@
-package com.example.technova
+package com.example.technova.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.technova.R
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,18 +40,16 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Guardar datos en preferencias para mostrar luego en el perfil
             getSharedPreferences("user", MODE_PRIVATE).edit()
                 .putString("name", name)
                 .putString("email", email)
                 .apply()
 
-            // Vamos al Perfil (lo creamos en el siguiente paso)
             startActivity(Intent(this, ProfileActivity::class.java))
             finish()
         }
 
-        // Volver a Login
+
         tvGoLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
