@@ -9,21 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.TechNova">
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" /> <!-- Tus pantallas -->
-        <activity
-            android:name=".LoginActivity"
+            android:name=".activities.BienvenidaActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" /> <!-- Splash como lanzador -->
+            android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.TechNova.Splash">
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" /> <!-- Tus pantallas -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
