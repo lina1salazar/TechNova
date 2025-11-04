@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/tn_blue_dark">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="20dp"
+        android:paddingHorizontal="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/logo_technova_claro" />
+
+        <LinearLayout
+            android:id="@+id/form_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/gradient_2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:layout_marginTop="20dp"
+            >
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/configurar_administrador_titulo"
+                android:textSize="20sp"
+                android:textColor="@color/tn_white"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+
+            <EditText
+                android:id="@+id/etNombre"
+                android:hint="@string/hint_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:textColor="@color/tn_white"
+                android:textColorHint="@color/tn_gray"
+                android:layout_marginTop="20dp"
+                />
+
+
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:hint="@string/hint_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:background="@drawable/bg_input"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/tn_white"
+                android:textColorHint="@color/tn_gray"
+                />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:hint="@string/hint_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:textColor="@color/tn_white"
+                android:textColorHint="@color/tn_gray"/>
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:hint="@string/hint_confirmar_contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:ems="10"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:textColor="@color/tn_white"
+                android:textColorHint="@color/tn_gray"/>
+
+
+
+            <Button
+                android:id="@+id/btnCrearAdministrador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="15sp"
+                app:backgroundTint="@null"
+                android:background="@drawable/btn_primary"
+                android:text="@string/btn_crear_administrador"
+                android:textColor="@color/tn_white"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

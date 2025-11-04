@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.technova.R
+import com.example.technova.database.UsuarioDAO
 
 class BienvenidaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,9 +19,19 @@ class BienvenidaActivity : AppCompatActivity() {
         val btnBienvenida = findViewById<Button>(R.id.btn_bienvenida)
 
         btnBienvenida.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
 
+            val usuarioDao = UsuarioDAO(this)
+            val existeAdmin = usuarioDao.existeAdmin()
+
+            if(!existeAdmin) {
+                val intent = Intent(this, AdminSetupActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
 
