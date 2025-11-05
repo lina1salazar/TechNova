@@ -1,5 +1,7 @@
 package com.example.technova.activities
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.technova.MainActivity
 import com.example.technova.R
 import com.example.technova.database.UsuarioDAO
+import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var etEmail: EditText
@@ -49,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
     private fun iniciarSesion() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
@@ -74,10 +78,21 @@ class LoginActivity : AppCompatActivity() {
         //Verificar si el usuario existe
         if (usuarioDAO.validarLogin(email, password)) {
             val usuario = usuarioDAO.obtenerUsuarioPorCorreo(email)
-            Toast.makeText(this, "Bienvenido, ${usuario?.nombre}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if(usuario!= null){
+                val prefs = getSharedPreferences("technova_prefs", Context.MODE_PRIVATE)
+                prefs.edit {
+                    putBoolean("esAdmin", usuario.esAdmin).putString(
+                        "usuarioCorreo",
+                        usuario.correo
+                    )
+                }
+
+                Toast.makeText(this, "Bienvenido, ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ProductsActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
         } else {
             Toast.makeText(this, "Correo electrónico o contraseña incorrectos", Toast.LENGTH_SHORT).show()
         }

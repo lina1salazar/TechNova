@@ -12,4 +12,14 @@
     <string name="login_register">Regístrate</string>
     <string name="profile_title">Perfil de usuario</string>
     <string name="edit_profile">Editar perfil</string>
+    <string name="configurar_administrador_titulo">Configurar administrador</string>
+    <string name="hint_confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="btn_crear_administrador">Crear Administrador</string>
+    <string name="nombre_producto">Nombre producto</string>
+    <string name="descripcion_producto">Descripción producto</string>
+    <string name="precio_producto">$0.00</string>
+    <string name="btn_agregar_producto">Agregar producto</string>
+    <string name="stock_producto">Stock</string>
+    <string name="btn_seleccionar_imagen">Seleccionar imagen</string>
+    <string name="btn_guardar">Guardar</string>
 </resources>

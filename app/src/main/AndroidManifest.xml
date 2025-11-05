@@ -9,6 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.TechNova">
         <activity
+            android:name=".activities.AddEditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AdminSetupActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.BienvenidaActivity"
             android:exported="false" />
         <activity

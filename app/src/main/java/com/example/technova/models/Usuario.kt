@@ -4,6 +4,7 @@ data class Usuario(
     val id: Long = 0,
     val nombre: String,
     val correo: String,
-    val contrasena: String
+    val contrasena: String,
+    val esAdmin: Boolean = false
 )
 

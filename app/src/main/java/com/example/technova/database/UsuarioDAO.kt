@@ -20,10 +20,11 @@ class UsuarioDAO(context: Context) {
             put(DatabaseHelper.COLUMN_NOMBRE, usuario.nombre)
             put(DatabaseHelper.COLUMN_CORREO, usuario.correo)
             put(DatabaseHelper.COLUMN_CONTRASENA, contrasenaHashed)
+            put(DatabaseHelper.COLUMN_ES_ADMIN, 0)
         }
         //Insertar en la base de datos
         // devuelve -1 si no se inserto o el id si se inserto
-        val newRowId = db.insert(DatabaseHelper.TABLE_NAME, null, values)
+        val newRowId = db.insert(DatabaseHelper.TABLE_USUARIOS, null, values)
         return newRowId != -1L
     }
     //Validar login
@@ -44,7 +45,7 @@ class UsuarioDAO(context: Context) {
         var usuario: Usuario? = null
 
         // Generar query
-        val query = "SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_CORREO} = ?"
+        val query = "SELECT * FROM ${DatabaseHelper.TABLE_USUARIOS} WHERE ${DatabaseHelper.COLUMN_CORREO} = ?"
         val cursor = db.rawQuery(query, arrayOf(correo))
 
         // Recorrer el cursor
@@ -53,7 +54,9 @@ class UsuarioDAO(context: Context) {
             val nombre = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NOMBRE))
             val correo = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CORREO))
             val contrasena = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTRASENA))
-            usuario = Usuario(id, nombre, correo, contrasena)
+            val esAdmin = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ES_ADMIN)) == 1
+
+            usuario = Usuario(id, nombre, correo, contrasena, esAdmin)
         }
 
         cursor.close()
@@ -63,7 +66,7 @@ class UsuarioDAO(context: Context) {
     //Validar el correo si existe
     fun validarCorreo(correo: String): Boolean {
         val db = dbHelper.readableDatabase
-        val query = "SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_CORREO} = ?"
+        val query = "SELECT * FROM ${DatabaseHelper.TABLE_USUARIOS} WHERE ${DatabaseHelper.COLUMN_CORREO} = ?"
         val cursor = db.rawQuery(query, arrayOf(correo))
         val existeCorreo = cursor.count > 0
         cursor.close()
@@ -74,7 +77,7 @@ class UsuarioDAO(context: Context) {
     //Eliminar usuario
     fun eliminarUsuario(correo: String): Boolean {
         val db = dbHelper.writableDatabase
-        val resultado = db.delete(DatabaseHelper.TABLE_NAME, "${DatabaseHelper.COLUMN_CORREO} = ?", arrayOf(correo))
+        val resultado = db.delete(DatabaseHelper.TABLE_USUARIOS, "${DatabaseHelper.COLUMN_CORREO} = ?", arrayOf(correo))
         db.close()
         return resultado > 0
     }
@@ -88,13 +91,44 @@ class UsuarioDAO(context: Context) {
             put(DatabaseHelper.COLUMN_CONTRASENA, contrasenaHashed)
         }
         val resultado = db.update(
-            DatabaseHelper.TABLE_NAME,
+            DatabaseHelper.TABLE_USUARIOS,
             values,
             "${DatabaseHelper.COLUMN_CORREO} = ?",
             arrayOf(usuario.correo)
         )
         db.close()
         return resultado > 0
+    }
+
+
+    // Registrar admin
+    fun registrarAdmin(usuario: Usuario): Boolean {
+        val db = dbHelper.writableDatabase
+        val contrasenaHashed = PasswordHelper.hashPassword(usuario.contrasena)
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_NOMBRE, usuario.nombre)
+            put(DatabaseHelper.COLUMN_CORREO, usuario.correo)
+            put(DatabaseHelper.COLUMN_CONTRASENA, contrasenaHashed)
+            put(DatabaseHelper.COLUMN_ES_ADMIN, 1)
+        }
+        val newRowId = db.insert(DatabaseHelper.TABLE_USUARIOS, null, values)
+        db.close()
+        return newRowId != -1L
+    }
+
+    // Verifica si ya existe al menos un usuario admin
+    fun existeAdmin(): Boolean {
+        val db = dbHelper.readableDatabase
+        val query = "SELECT COUNT(*) as cnt FROM ${DatabaseHelper.TABLE_USUARIOS} WHERE ${DatabaseHelper.COLUMN_ES_ADMIN} = 1"
+        val cursor = db.rawQuery(query, null)
+        var existe = false
+        if (cursor.moveToFirst()) {
+            val count = cursor.getInt(cursor.getColumnIndexOrThrow("cnt"))
+            existe = count > 0
+        }
+        cursor.close()
+        db.close()
+        return existe
     }
 
 }
