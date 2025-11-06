@@ -16,10 +16,9 @@ class ProfileActivity : AppCompatActivity() {
         val email = prefs.getString("email", "sin-registro@technova.app")
 
 
-        findViewById<Button>(R.id.btnLogout).setOnClickListener {
-            prefs.edit().clear().apply()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
+        //findViewById<Button>(R.id.btnLogout).setOnClickListener {
+            //prefs.edit().clear().apply()
+            //startActivity(Intent(this, LoginActivity::class.java))
+            //finish()
     }
 }
