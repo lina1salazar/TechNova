@@ -34,6 +34,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tn_white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tn_gray"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
         <EditText
             android:id="@+id/etFullName"
             android:layout_width="match_parent"
@@ -78,6 +97,7 @@
             android:gravity="center"
             android:layout_marginTop="20dp"/>
 
+
     </LinearLayout>
 
     <!-- Barra de navegación inferior con fondo diagonal -->
@@ -113,7 +133,6 @@
                 app:itemIconSize="34dp"
                 app:itemBackground="@android:color/transparent"
                 app:itemRippleColor="@android:color/transparent"
-                app:itemActiveIndicatorEnabled="false"
                 />
 
         </LinearLayout>
