@@ -1,0 +1,15 @@
+<!-- res/drawable/bg_nav_gradient.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:startColor="#65D2F7"
+        android:endColor="#3943FF"
+        android:angle="0"/>
+    <corners android:radius="24dp"/>
+    <padding
+        android:left="16dp"
+        android:top="10dp"
+        android:right="16dp"
+        android:bottom="10dp"/>
+</shape>
+
+
