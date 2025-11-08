@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.technova.MainActivity
+import com.example.technova.activities.MainActivity
 import com.example.technova.R
 import com.example.technova.database.UsuarioDAO
 import androidx.core.content.edit
@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Bienvenido, ${usuario.nombre}", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ProductsActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
