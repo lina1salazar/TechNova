@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ProductsFragment"
+    android:paddingTop="40dp"
     android:background="@color/tn_white"
-    tools:context=".activities.BienvenidaActivity"
-    android:paddingTop="40dp">
+    >
 
     <ImageView
         android:layout_width="match_parent"
@@ -41,8 +41,7 @@
         app:srcCompat="@drawable/ic_add"
         app:rippleColor="@color/tn_blue_dark"
         app:backgroundTint="@color/tn_white"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_gravity="end|bottom"/>
 
 
-</RelativeLayout>
+</FrameLayout>

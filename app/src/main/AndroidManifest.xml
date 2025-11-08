@@ -12,16 +12,13 @@
             android:name=".activities.AddEditProductActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ProductsActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AdminSetupActivity"
             android:exported="false" />
         <activity
             android:name=".activities.BienvenidaActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ProfileActivity"
