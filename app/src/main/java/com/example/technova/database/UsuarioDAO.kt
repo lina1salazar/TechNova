@@ -82,19 +82,24 @@ class UsuarioDAO(context: Context) {
         return resultado > 0
     }
     //Actualizar usuario
-    fun actualizarUsuario(usuario: Usuario): Boolean {
+    fun actualizarUsuario(usuario: Usuario, originalCorreo: String): Boolean {
         val db = dbHelper.writableDatabase
-        val contrasenaHashed = PasswordHelper.hashPassword(usuario.contrasena)
+
+        // Sólo hasheamos y actualizamos la contraseña si nos pasan una no-vacía.
         val values = ContentValues().apply {
             put(DatabaseHelper.COLUMN_NOMBRE, usuario.nombre)
             put(DatabaseHelper.COLUMN_CORREO, usuario.correo)
-            put(DatabaseHelper.COLUMN_CONTRASENA, contrasenaHashed)
+            if (usuario.contrasena.isNotEmpty()) {
+                val contrasenaHashed = PasswordHelper.hashPassword(usuario.contrasena)
+                put(DatabaseHelper.COLUMN_CONTRASENA, contrasenaHashed)
+            }
         }
+
         val resultado = db.update(
             DatabaseHelper.TABLE_USUARIOS,
             values,
             "${DatabaseHelper.COLUMN_CORREO} = ?",
-            arrayOf(usuario.correo)
+            arrayOf(originalCorreo)
         )
         db.close()
         return resultado > 0

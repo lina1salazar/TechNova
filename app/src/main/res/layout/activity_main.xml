@@ -25,7 +25,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="unlabeled"
-
+        app:itemIconSize="70dp"
+        android:background="@color/tn_blue_primary"
+        app:itemIconTint="@color/nav_item_colors"
+        app:itemTextColor="@color/nav_item_colors"
+        app:itemActiveIndicatorStyle="@color/tn_white"
+        app:itemRippleColor="@android:color/transparent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

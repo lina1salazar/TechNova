@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.technova.activities.MainActivity
 import com.example.technova.R
 import com.example.technova.database.UsuarioDAO
 import androidx.core.content.edit
@@ -24,6 +23,14 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val prefs = getSharedPreferences("technova_prefs", Context.MODE_PRIVATE)
+        val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
 
         //Inicializar el DAO
         val usuarioDAO = UsuarioDAO(this)
@@ -84,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
                     putBoolean("esAdmin", usuario.esAdmin).putString(
                         "usuarioCorreo",
                         usuario.correo
-                    )
+                    ).putBoolean("isLoggedIn", true)
                 }
 
                 Toast.makeText(this, "Bienvenido, ${usuario.nombre}", Toast.LENGTH_SHORT).show()

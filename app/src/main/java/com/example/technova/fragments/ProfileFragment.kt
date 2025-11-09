@@ -12,7 +12,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.technova.database.UsuarioDAO
 import com.example.technova.databinding.FragmentProfileBinding
+import com.example.technova.models.Usuario
 import com.example.technova.utils.LocationHelper
 
 class ProfileFragment : Fragment() {
@@ -22,11 +24,11 @@ class ProfileFragment : Fragment() {
 
     private lateinit var locationHelper: LocationHelper
 
+    private var currentUsuario: Usuario? = null
+    private var originalCorreo: String? = null
+
     companion object {
-        private const val PREFS_NAME = "user"
-        private const val KEY_NAME = "name"
-        private const val KEY_EMAIL = "email"
-        private const val KEY_PASSWORD = "password" // opcional para demo
+
     }
 
     private val permLauncher = registerForActivityResult(
@@ -53,17 +55,30 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 1) Cargar datos guardados
-        val prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val name = prefs.getString(KEY_NAME, "Usuario TechNova") ?: "Usuario TechNova"
-        val email = prefs.getString(KEY_EMAIL, "sin-registro@technova.app") ?: "sin-registro@technova.app"
-        val password = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val prefs = requireActivity().getSharedPreferences("technova_prefs", Context.MODE_PRIVATE)
+        val usuarioCorreo = prefs.getString("usuarioCorreo", null)
 
 
-        binding.etFullName.setText(name)
-        binding.etEmail.setText(email)
-        binding.etPassword.setText(password)
+        if (usuarioCorreo.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "No se encontró usuario logueado", Toast.LENGTH_SHORT).show()
+        } else {
+            val usuarioDAO = UsuarioDAO(requireContext())
+            val usuario = usuarioDAO.obtenerUsuarioPorCorreo(usuarioCorreo)
+            if (usuario != null) {
+                currentUsuario = usuario
+                originalCorreo = usuario.correo
 
-        // 2) Guardar al pulsar ACTUALIZARa
+                // Rellenar UI
+                binding.etFullName.setText(usuario.nombre)
+                binding.etEmail.setText(usuario.correo)
+                binding.etPassword.setText("")
+            } else {
+                Toast.makeText(requireContext(), "Usuario no encontrado en la base de datos", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        // 2) Guardar al pulsar ACTUALIZAR
         binding.btnUpdate.setOnClickListener {
             val newName = binding.etFullName.text?.toString()?.trim().orEmpty()
             val newEmail = binding.etEmail.text?.toString()?.trim().orEmpty()
@@ -82,15 +97,42 @@ class ProfileFragment : Fragment() {
 
             if (!ok) return@setOnClickListener
 
-            requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putString(KEY_NAME, newName)
-                .putString(KEY_EMAIL, newEmail)
-                .putString(KEY_PASSWORD, newPass) // opcional
-                .apply()
+            // Verificar que tengamos el usuario original y originalCorreo
+            val usuarioDAO = UsuarioDAO(requireContext())
+            val origCorreo = originalCorreo
+            val usuarioId = currentUsuario?.id
 
+            if (origCorreo == null || usuarioId == null) {
+                Toast.makeText(requireContext(), "No se puede actualizar: usuario no cargado", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            Toast.makeText(requireContext(), "Perfil actualizado", Toast.LENGTH_SHORT).show()
+            // Construimos el objeto Usuario para actualizar.
+            // Si newPass está vacío -> no cambia la contraseña (según UsuarioDAO.actualizarUsuario)
+            val usuarioParaActualizar = Usuario(
+                id = usuarioId,
+                nombre = newName,
+                correo = newEmail,
+                contrasena = newPass,
+                esAdmin = currentUsuario?.esAdmin ?: false
+            )
+
+            val exito = usuarioDAO.actualizarUsuario(usuarioParaActualizar, origCorreo)
+            if (exito) {
+                // Actualizamos la SharedPreferences si cambió el correo
+                if (origCorreo != newEmail) {
+                    val prefsEditor = prefs.edit()
+                    prefsEditor.putString("usuarioCorreo", newEmail)
+                    prefsEditor.apply()
+                    // También actualizamos originalCorreo para futuras operaciones
+                    originalCorreo = newEmail
+                }
+                // Actualizamos la copia local
+                currentUsuario = usuarioParaActualizar.copy(id = usuarioId, esAdmin = currentUsuario?.esAdmin ?: false)
+                Toast.makeText(requireContext(), "Perfil actualizado", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // 3) Geolocalización (tu LocationHelper exige Activity)
