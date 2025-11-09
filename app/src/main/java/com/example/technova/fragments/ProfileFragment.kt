@@ -16,8 +16,14 @@ import com.example.technova.database.UsuarioDAO
 import com.example.technova.databinding.FragmentProfileBinding
 import com.example.technova.models.Usuario
 import com.example.technova.utils.LocationHelper
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -27,20 +33,10 @@ class ProfileFragment : Fragment() {
     private var currentUsuario: Usuario? = null
     private var originalCorreo: String? = null
 
+    private var mMap: GoogleMap? = null
+
     companion object {
 
-    }
-
-    private val permLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { grants ->
-        val fine = grants[Manifest.permission.ACCESS_FINE_LOCATION] == true
-        val coarse = grants[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-        if (fine || coarse) {
-            locationHelper.start()
-        } else {
-            Toast.makeText(requireContext(), "Permisos de ubicación denegados", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onCreateView(
@@ -137,6 +133,13 @@ class ProfileFragment : Fragment() {
 
         // 3) Geolocalización (tu LocationHelper exige Activity)
         locationHelper = LocationHelper(requireActivity())
+        val mapFragment = childFragmentManager.findFragmentById(com.example.technova.R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
+
+        locationHelper.locationListener = { location ->
+            // location: android.location.Location
+            updateMapLocation(location.latitude, location.longitude, "Aquí estoy")
+        }
 
         if (hasLocationPermission()) {
             locationHelper.start()
@@ -147,6 +150,54 @@ class ProfileFragment : Fragment() {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
+        }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        mMap?.uiSettings?.isZoomControlsEnabled = true
+        mMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
+
+        val bogota = LatLng(4.6482784, -74.2726187)
+        mMap?.addMarker(MarkerOptions().position(bogota).title("Marcador en Bogota"))
+        mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(bogota, 12f))
+
+        // intenta habilitar capa My Location
+        enableMyLocationIfPermitted()
+    }
+
+
+
+    private val permLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { grants ->
+        val fine = grants[Manifest.permission.ACCESS_FINE_LOCATION] == true
+        val coarse = grants[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        if (fine || coarse) {
+            locationHelper.start()
+            enableMyLocationIfPermitted()
+        } else {
+            Toast.makeText(requireContext(), "Permisos de ubicación denegados", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateMapLocation(lat: Double, lon: Double, title: String = "Mi ubicación") {
+        val pos = LatLng(lat, lon)
+        mMap?.clear()
+        mMap?.addMarker(MarkerOptions().position(pos).title(title))
+        mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15f))
+    }
+
+    private fun enableMyLocationIfPermitted() {
+        try {
+            if (mMap == null) return
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mMap?.isMyLocationEnabled = true
+            }
+        } catch (ex: SecurityException) {
+            ex.printStackTrace()
         }
     }
 
@@ -167,3 +218,4 @@ class ProfileFragment : Fragment() {
         // Tu LocationHelper actual no tiene stop(); si lo agregas, llámalo aquí.
     }
 }
+
