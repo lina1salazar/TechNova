@@ -22,6 +22,26 @@
     <string name="stock_producto">Stock</string>
     <string name="btn_seleccionar_imagen">Seleccionar imagen</string>
     <string name="btn_guardar">Guardar</string>
+    <string name="profile_update_btn">ACTUALIZAR</string>
+    <string name="profile_avatar_cd">Foto de perfil</string>
+    <string name="profile_no_user_logged">No se encontró usuario logueado</string>
+    <string name="profile_user_not_found">Usuario no encontrado en la base de datos</string>
+    <string name="profile_update_success">Perfil actualizado</string>
+    <string name="profile_update_error">Error al actualizar el perfil</string>
+    <string name="profile_name_required">Ingresa tu nombre</string>
+    <string name="profile_email_invalid">Correo no válido</string>
+    <string name="location_perm_denied">Permisos de ubicación denegados</string>
+    <string name="sp_file">technova_prefs</string>
+    <string name="sp_key_user_email">usuarioCorreo</string>
+    <string name="register_fill_all">Por favor, completa todos los campos</string>
+    <string name="register_email_invalid">Por favor, ingresa un email válido</string>
+    <string name="register_password_minlen">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="register_email_exists">El correo ya está registrado</string>
+    <string name="register_success">Usuario registrado exitosamente</string>
+    <string name="register_failure">Error al registrar el usuario</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

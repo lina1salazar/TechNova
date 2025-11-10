@@ -46,7 +46,7 @@
                 android:id="@+id/etFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre Completo"
+                android:hint="@string/hint_name"
                 android:inputType="textPersonName"
                 android:textColor="@color/tn_white"
                 android:textColorHint="@color/tn_gray"
@@ -58,7 +58,7 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electrónico"
+                android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/tn_white"
                 android:textColorHint="@color/tn_gray"
@@ -70,7 +70,7 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/tn_white"
                 android:textColorHint="@color/tn_gray"
@@ -82,7 +82,7 @@
                 android:id="@+id/btnUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="ACTUALIZAR"
+                android:text="@string/profile_update_btn"
                 android:textSize="15sp"
                 android:textColor="@color/tn_white"
                 android:background="@drawable/btn_primary"
@@ -92,7 +92,7 @@
 
         </LinearLayout>
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
