@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         private const val DATABASE_NAME = "usuariosdb"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
 
         const val TABLE_USUARIOS = "usuarios"
         const val COLUMN_ID = "id"
@@ -46,11 +46,33 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 $COLUMN_PRODUCTO_IMAGEN_URL TEXT NOT NULL
                 )
         """
+        private const val CREATE_TABLE_CARRITO = """
+            CREATE TABLE IF NOT EXISTS carrito (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                producto_id INTEGER NOT NULL,
+                nombre_snapshot TEXT NOT NULL,
+                precio_unitario REAL NOT NULL,
+                cantidad INTEGER NOT NULL DEFAULT 1,
+                imagen_url TEXT,
+                created_at INTEGER NOT NULL,
+        FOREIGN KEY(producto_id) REFERENCES productos(id) ON DELETE CASCADE
+    )
+"""
+
+
     }
     //Se ejecuta solo la primera vez que se crea la base de datos
+
+    override fun onConfigure(db: SQLiteDatabase) {
+        super.onConfigure(db)
+        db.setForeignKeyConstraintsEnabled(true)
+
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_USUARIOS)
         db.execSQL(CREATE_TABLE_PRODUCTOS)
+        db.execSQL(CREATE_TABLE_CARRITO)
 
     }
 
@@ -63,6 +85,14 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
             }
             try {
                 db.execSQL(CREATE_TABLE_PRODUCTOS)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        if (oldVersion < 3) {
+            try {
+                db.execSQL(CREATE_TABLE_CARRITO)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
