@@ -39,9 +39,13 @@
     <string name="register_email_exists">El correo ya está registrado</string>
     <string name="register_success">Usuario registrado exitosamente</string>
     <string name="register_failure">Error al registrar el usuario</string>
+    <string name="bnt_finalizar_compra">Finalizar Compra</string>
+    <string name="text_total">Total</string>
+    <string name="text_total_pagar">$0.00"</string>
 
 
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="quantity">1</string>
 </resources>

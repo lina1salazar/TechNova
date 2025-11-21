@@ -2,10 +2,10 @@ package com.example.technova.models
 
 data class CartItem(
     val id: Long = 0,
-    val productoId: Int,
+    val productoId: Long,
     val nombreSnapshot: String,
     val precioUnitario: Double,
-    val cantidad: Int,
+    var cantidad: Int,
     val imagenUrl: String? = null,
     val createdAt: Long = System.currentTimeMillis()
 ) {

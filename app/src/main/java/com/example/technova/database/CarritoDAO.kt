@@ -2,6 +2,7 @@ package com.example.technova.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 import com.example.technova.models.CartItem
 
 class CarritoDAO(private val context: Context) {
@@ -10,11 +11,13 @@ class CarritoDAO(private val context: Context) {
 
     /** Lee el usuario actual como Long (desde SharedPreferences) */
     private fun currentUserId(): Long {
-        val prefs = context.getSharedPreferences("technova_prefs", Context.MODE_PRIVATE)
+        val prefs = context.applicationContext.getSharedPreferences(
+            "technova_prefs",
+            Context.MODE_PRIVATE
+        )
         return prefs.getLong("usuarioId", -1L)
     }
 
-    /** Obtiene o crea el carrito OPEN del usuario actual y retorna su id (Long) */
     private fun getOrCreateOpenCartId(): Long {
         val userId = currentUserId()
         if (userId <= 0L) return -1L
@@ -75,7 +78,7 @@ class CarritoDAO(private val context: Context) {
                     if (cantidad > 0) {
                         val cv = ContentValues().apply {
                             put("carrito_id", cartId)                        // Long ok (INTEGER en SQLite)
-                            put("producto_id", item.productoId.toInt())      // guardamos como INTEGER
+                            put("producto_id", item.productoId.toLong())      // guardamos como INTEGER
                             put("nombre_snapshot", item.nombreSnapshot)
                             put("precio_unitario", item.precioUnitario)
                             put("cantidad", cantidad)
@@ -88,7 +91,7 @@ class CarritoDAO(private val context: Context) {
             }
             db.setTransactionSuccessful()
             true
-        } catch (_: Exception) {
+        } catch (e: Exception) {
             false
         } finally {
             db.endTransaction()
@@ -112,7 +115,7 @@ class CarritoDAO(private val context: Context) {
                     CartItem(
                         id = c.getLong(0),
                         // Si tu CartItem.productoId es Long, cambia a getLong(1)
-                        productoId = c.getInt(1),
+                        productoId = c.getLong(1),
                         nombreSnapshot = c.getString(2),
                         precioUnitario = c.getDouble(3),
                         cantidad = c.getInt(4),
@@ -126,7 +129,7 @@ class CarritoDAO(private val context: Context) {
     }
 
     /** Actualiza cantidad; si <=0 elimina. Respeta stock actual del producto. */
-    fun actualizarCantidad(idDetalle: Int, nuevaCantidad: Int): Boolean {
+    fun actualizarCantidad(idDetalle: Long, nuevaCantidad: Int): Boolean {
         val db = dbHelper.writableDatabase
 
         var productoId = -1
@@ -148,7 +151,7 @@ class CarritoDAO(private val context: Context) {
     }
 
     /** Elimina una línea del carrito (por id detalle) */
-    fun eliminar(idDetalle: Int): Boolean {
+    fun eliminar(idDetalle: Long): Boolean {
         val db = dbHelper.writableDatabase
         return db.delete(DatabaseHelper.TABLE_CARRITO_DET, "id=?", arrayOf(idDetalle.toString())) > 0
     }
