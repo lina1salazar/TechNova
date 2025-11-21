@@ -18,7 +18,6 @@ class ProductoDAO(context: Context) {
             put(DatabaseHelper.COLUMN_PRODUCTO_IMAGEN_URL, producto.imagenUrl)
         }
         val newRowId = db.insert(DatabaseHelper.TABLE_PRODUCTOS, null, values)
-        db.close()
         return newRowId
     }
 
@@ -39,7 +38,6 @@ class ProductoDAO(context: Context) {
             "${DatabaseHelper.COLUMN_PRODUCTO_ID} = ?",
             arrayOf(producto.id.toString())
         )
-        db.close()
         return resultado > 0
     }
 
@@ -51,7 +49,6 @@ class ProductoDAO(context: Context) {
             "${DatabaseHelper.COLUMN_PRODUCTO_ID} = ?",
             arrayOf(productoId.toString())
         )
-        db.close()
         return resultado > 0
     }
 
@@ -71,7 +68,6 @@ class ProductoDAO(context: Context) {
             p = Producto(id, nombre, descripcion, precio, stock, imagenUrl)
         }
         cursor.close()
-        db.close()
         return p
     }
 
@@ -93,7 +89,6 @@ class ProductoDAO(context: Context) {
             productos.add(p)
         }
         cursor.close()
-        db.close()
         return productos
     }
 }

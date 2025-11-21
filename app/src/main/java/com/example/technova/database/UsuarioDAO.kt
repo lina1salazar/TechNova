@@ -60,7 +60,6 @@ class UsuarioDAO(context: Context) {
         }
 
         cursor.close()
-        db.close()
         return usuario
     }
     //Validar el correo si existe
@@ -70,7 +69,6 @@ class UsuarioDAO(context: Context) {
         val cursor = db.rawQuery(query, arrayOf(correo))
         val existeCorreo = cursor.count > 0
         cursor.close()
-        db.close()
         return existeCorreo
     }
 
@@ -78,7 +76,6 @@ class UsuarioDAO(context: Context) {
     fun eliminarUsuario(correo: String): Boolean {
         val db = dbHelper.writableDatabase
         val resultado = db.delete(DatabaseHelper.TABLE_USUARIOS, "${DatabaseHelper.COLUMN_CORREO} = ?", arrayOf(correo))
-        db.close()
         return resultado > 0
     }
     //Actualizar usuario
@@ -101,7 +98,6 @@ class UsuarioDAO(context: Context) {
             "${DatabaseHelper.COLUMN_CORREO} = ?",
             arrayOf(originalCorreo)
         )
-        db.close()
         return resultado > 0
     }
 
@@ -117,7 +113,6 @@ class UsuarioDAO(context: Context) {
             put(DatabaseHelper.COLUMN_ES_ADMIN, 1)
         }
         val newRowId = db.insert(DatabaseHelper.TABLE_USUARIOS, null, values)
-        db.close()
         return newRowId != -1L
     }
 
@@ -132,7 +127,6 @@ class UsuarioDAO(context: Context) {
             existe = count > 0
         }
         cursor.close()
-        db.close()
         return existe
     }
 
