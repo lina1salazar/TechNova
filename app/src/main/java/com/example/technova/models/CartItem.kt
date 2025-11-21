@@ -1,7 +1,7 @@
 package com.example.technova.models
 
 data class CartItem(
-    val id: Int = 0,
+    val id: Long = 0,
     val productoId: Int,
     val nombreSnapshot: String,
     val precioUnitario: Double,

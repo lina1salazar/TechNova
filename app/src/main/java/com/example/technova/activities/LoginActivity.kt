@@ -91,7 +91,8 @@ class LoginActivity : AppCompatActivity() {
                     putBoolean("esAdmin", usuario.esAdmin).putString(
                         "usuarioCorreo",
                         usuario.correo
-                    ).putBoolean("isLoggedIn", true)
+                    ).putBoolean("isLoggedIn", true).putLong("usuarioId", usuario.id)
+
                 }
 
                 Toast.makeText(this, "Bienvenido, ${usuario.nombre}", Toast.LENGTH_SHORT).show()
